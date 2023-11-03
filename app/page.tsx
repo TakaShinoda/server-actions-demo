@@ -14,7 +14,7 @@ export default function Home() {
       <h2 className="mt-10text-center text-2xl font-bold leading-9 tracking-tight text-white mb-12">
         Todo List
       </h2>
-      <form className="space-y-6 w-8/12" action={addTask}>
+      <form className="space-y-6 w-1/4" action={addTask}>
         <div>
           <label
             htmlFor="task"

@@ -1,14 +1,18 @@
 import { sql } from '@vercel/postgres'
+import { revalidatePath } from 'next/cache'
 
 async function addTask(formData: FormData) {
   'use server'
 
   const task = formData.get('task')
-  
   await sql`INSERT INTO todo (task) VALUES (${task?.toString() || ''})`
+
+  revalidatePath('/')
 }
 
-export default function Home() {
+export default async function Home() {
+  const { rows } = await sql`SELECT * FROM todo ORDER BY created_at DESC`
+
   return (
     <main className="flex flex-col items-center justify-between p-24">
       <h2 className="mt-10text-center text-2xl font-bold leading-9 tracking-tight text-white mb-12">
@@ -70,34 +74,35 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody className="bg-white/5">
-                <tr>
-                  <td className="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6">
-                    1
-                  </td>
-                  <td className="px-3 py-4 text-sm text-white">
-                    あいうえおあいうえおあいうえおあいうえお
-                  </td>
-                  <td className="px-3 py-4 text-sm text-white">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
-                    />
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      type="button"
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                {rows.map((todo) => (
+                  <tr key={todo.id}>
+                    <td className="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6">
+                      {todo.id}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-white">
+                      {todo.task}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-white">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
+                      />
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <button
+                        type="button"
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-
     </main>
   )
 }

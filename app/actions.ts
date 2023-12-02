@@ -19,3 +19,9 @@ export async function doneTask(id: number, done: boolean) {
 
   revalidatePath('/')
 }
+
+export async function deleteTask(id: number) {
+  await sql`DELETE FROM todo WHERE id = ${id}`
+
+  revalidatePath('/')
+}

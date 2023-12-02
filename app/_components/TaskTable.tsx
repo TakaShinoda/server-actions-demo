@@ -1,5 +1,7 @@
 import { getAllTasks } from '../actions'
 import { DoneCheckbox } from './DoneCheckbox'
+import { DeleteButton } from './DeleteButton'
+import type { Task } from '../types'
 
 export const TaskTable = async () => {
   const { rows } = await getAllTasks()
@@ -34,22 +36,17 @@ export const TaskTable = async () => {
               </tr>
             </thead>
             <tbody className="bg-white/5">
-              {rows.map((todo) => (
-                <tr key={todo.id}>
+              {rows.map((task) => (
+                <tr key={task.id}>
                   <td className="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6">
-                    {todo.id}
+                    {task.id}
                   </td>
-                  <td className="px-3 py-4 text-sm text-white">{todo.task}</td>
+                  <td className="px-3 py-4 text-sm text-white">{task.task}</td>
                   <td className="px-3 py-4 text-sm text-white">
-                    <DoneCheckbox todo={todo as any} />
+                    <DoneCheckbox task={task as Task} />
                   </td>
                   <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      type="button"
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      Delete
-                    </button>
+                    <DeleteButton task={task as Task} />
                   </td>
                 </tr>
               ))}

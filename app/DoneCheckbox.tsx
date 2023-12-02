@@ -2,13 +2,7 @@
 
 import { useTransition } from 'react'
 import { doneTask } from './actions'
-
-type Todo = {
-  id: number
-  task: string
-  done: boolean
-  created_at: Date
-}
+import type { Todo } from './types'
 
 type Props = {
   todo: Todo

@@ -1,5 +1,6 @@
 import { sql } from '@vercel/postgres'
 import { revalidatePath } from 'next/cache'
+import { DoneCheckbox } from './DoneCheckbox'
 
 async function addTask(formData: FormData) {
   'use server'
@@ -83,10 +84,7 @@ export default async function Home() {
                       {todo.task}
                     </td>
                     <td className="px-3 py-4 text-sm text-white">
-                      <input
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
-                      />
+                      <DoneCheckbox todo={todo as any} />
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <button

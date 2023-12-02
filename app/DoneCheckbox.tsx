@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
-import { doneTodo } from './actions'
+import { doneTask } from './actions'
 
 type Todo = {
   id: number
@@ -23,7 +23,7 @@ export const DoneCheckbox = ({ todo }: Props) => {
       ) : (
         <input
           checked={todo.done}
-          onChange={() => startTransition(() => doneTodo(todo.id, todo.done))}
+          onChange={() => startTransition(() => doneTask(todo.id, todo.done))}
           type="checkbox"
           className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
         />

@@ -2,13 +2,13 @@
 
 import { useTransition } from 'react'
 import { doneTask } from '../actions'
-import type { Todo } from '../types'
+import type { Task } from '../types'
 
 type Props = {
-  todo: Todo
+  task: Task
 }
 
-export const DoneCheckbox = ({ todo }: Props) => {
+export const DoneCheckbox = ({ task }: Props) => {
   const [isPending, startTransition] = useTransition()
   return (
     <>
@@ -16,8 +16,8 @@ export const DoneCheckbox = ({ todo }: Props) => {
         'loading...'
       ) : (
         <input
-          checked={todo.done}
-          onChange={() => startTransition(() => doneTask(todo.id, todo.done))}
+          checked={task.done}
+          onChange={() => startTransition(() => doneTask(task.id, task.done))}
           type="checkbox"
           className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600"
         />

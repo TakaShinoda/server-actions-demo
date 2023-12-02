@@ -1,18 +1,8 @@
-import { sql } from '@vercel/postgres'
-import { revalidatePath } from 'next/cache'
+import { addTask, getAllTasks } from './actions'
 import { DoneCheckbox } from './DoneCheckbox'
 
-async function addTask(formData: FormData) {
-  'use server'
-
-  const task = formData.get('task')
-  await sql`INSERT INTO todo (task) VALUES (${task?.toString() || ''})`
-
-  revalidatePath('/')
-}
-
 export default async function Home() {
-  const { rows } = await sql`SELECT * FROM todo ORDER BY created_at DESC`
+  const { rows } = await getAllTasks()
 
   return (
     <main className="flex flex-col items-center justify-between p-24">

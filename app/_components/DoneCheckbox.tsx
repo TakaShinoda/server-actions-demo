@@ -1,8 +1,8 @@
 'use client'
 
 import { useTransition } from 'react'
-import { doneTask } from './actions'
-import type { Todo } from './types'
+import { doneTask } from '../actions'
+import type { Todo } from '../types'
 
 type Props = {
   todo: Todo

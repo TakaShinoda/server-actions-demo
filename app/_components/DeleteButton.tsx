@@ -8,7 +8,6 @@ type Props = {
 }
 
 export const DeleteButton = ({ task }: Props) => {
-  console.log(task)
   const [isPending, startTransition] = useTransition()
   return (
     <button

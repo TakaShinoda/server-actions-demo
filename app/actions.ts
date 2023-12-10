@@ -15,7 +15,7 @@ export async function getAllTasks() {
 }
 
 export async function doneTask(id: number, done: boolean) {
-  await sql`UPDATE todo SET done = ${!done} WHERE id = ${id}`
+  await sql`UPDATE todo SET done = ${!done}, updated_at = CURRENT_TIMESTAMP WHERE id = ${id}`
 
   revalidatePath('/')
 }
